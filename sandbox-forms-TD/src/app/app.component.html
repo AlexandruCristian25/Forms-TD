@@ -1,0 +1,87 @@
+<div style="margin-left: 20px;">
+  <form (ngSubmit)="onSubmit()" #form1="ngForm">
+    <div id="user-data" ngModelGroup="userData" #uData="ngModelGroup">
+      <div class="col-md-7">
+        <label for="firstname" class="form-label">First name:</label>
+        <input
+          type="text"
+          class="form-control form-control-lg"
+          id="firstname"
+          required
+          ngModel name="firstname">
+      </div>
+      <div class="col-md-7">
+        <label for="lastname" class="form-label">Last name:</label>
+        <input
+          type="text"
+          class="form-control form-control-lg"
+          id="lastname"
+          ngModel name="lastname">
+      </div>
+      <span *ngIf="!uData.valid && uData.touched">Group not valid!</span>
+    </div>
+    <div class="col-md-7">
+      <label for="email" class="form-label">Email address:</label>
+      <input
+        type="text"
+        class="form-control form-control-lg"
+        id="email"
+        required
+        email
+        name="email"
+        ngModel
+        #email="ngModel">
+        <span class="help-block" *ngIf="!email.valid && email.touched">Please enter a valid email address!</span>
+    </div>
+    <div class="col-md-7 mt-4">
+      <select
+        class="form-select form-select-lg"
+        [ngModel]="defaultCity"
+        name="city">
+        <option selected>Select city</option>
+        <option value="Bucharest">Bucharest</option>
+        <option value="Cluj">Cluj</option>
+        <option value="Brasov">Brasov</option>
+        <option value="Constanta">Constanta</option>
+      </select>
+    </div>
+    <div class="col-md-7">
+      <label for="description" class="form-label">Description:</label>
+      <input
+        type="text"
+        class="form-control form-control-lg"
+        id="description"
+        [(ngModel)]="description"
+        name="description">
+        <span class="help-block">{{description}}</span>
+    </div>
+    <div class="col-md-7">
+      <button class="btn btn-secondary" (click)="addSomeDescription()" type="button">Add description</button>
+    </div>
+    <div class="col-md-7">
+      <div *ngFor="let status of civilStatus">
+        <label for="status">
+          <input type="radio" name="status" ngModel [value]="status" required>
+          {{ status }}
+        </label>
+      </div>
+    </div>
+    <div class="mt-4">
+      <button
+        class="btn btn-primary"
+        [disabled]="!form1.form.valid"
+        type="submit">Submit</button>
+    </div>
+  </form>
+</div>
+
+<hr>
+
+<div style="margin-left: 20px;" *ngIf="formSubmitted">
+  <h3>Data submitted</h3>
+  <p>First and last name: {{ person.firstname }} {{ person.lastname }}</p>
+  <p>Email: {{ person.email }}</p>
+  <p>City: {{ person.city }}</p>
+  <p>Description: {{ person.description }}</p>
+  <p>Civil status: {{ person.status }}</p>
+</div>
